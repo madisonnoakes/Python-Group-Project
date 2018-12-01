@@ -50,28 +50,36 @@ price_IDS = [{"id": "priceblock_ourprice"},
 #Declare main() function
 def main():
     
-
+    sent = True
+    reset = True
     #Present the user with a welccome message describing how the program works
     print("Hello. Welcome to Amazon Sleuth. Would you like add items to be tracked or check on items you have previously asked to be tracked?"+ "\n"+
          "Type ADD to add items to your tracking list or CHECK to check items that you have asked to be tracked \n"+
-         "If this is your first time, type FIRST.")
+         "If this is your first time, type FIRST. If you want to exit, type EXIT.")
     #Allow user to enter command
-    userCommand = str(input())
+    while sent:
+      userCommand = str(input())
     
-    #Determine what command was entered and run the appropriate function based on that
-    if userCommand.upper() == 'FIRST':
-        #Writes a new csv filled with info on the items the user provides via their Amazon URLs
-        fileNew(addItems())
-    elif userCommand.upper() == 'ADD':
-    #Check for existance of master file
-        if os.path.isfile('./AmazonItemsTest.csv') == True:
-            fileAdd(addItems())
-            print('File Add ran')
-        else:
-            print('Sorry, we do not have any previously tracked items on file; please enter in item URLs to start tracking: ')
-            fileNew(addItems())
-    elif userCommand.upper() == 'CHECK':
-        displayCSV()
+      #Determine what command was entered and run the appropriate function based on that
+      if userCommand.upper() == 'FIRST':
+          #Writes a new csv filled with info on the items the user provides via their Amazon URLs
+          fileNew(addItems())
+      elif userCommand.upper() == 'ADD':
+      #Check for existance of master file
+          if os.path.isfile('./AmazonItemsTest.csv') == True:
+              fileAdd(addItems())
+              print('File Add ran')
+          else:
+              print('Sorry, we do not have any previously tracked items on file; please enter in item URLs to start tracking: ')
+              fileNew(addItems())
+      elif userCommand.upper() == 'CHECK':
+          displayCSV()
+      if userCommand.upper() == 'EXIT':
+          sent = False
+          reset = False
+          
+      if reset:
+        print("What do you want to do next? ")
     #Name of the master csv with the Amazon item data in it will be called 'AmazonItems.csv'
     
     #11/8/18 using 'AmazonItemsTest.csv' for testing purposes
