@@ -136,14 +136,14 @@ def scrape_info(url):
     #Find the item name on the Amazon page
     itemName = soup.find("span", {"id": "productTitle"})
     
-    amazonItem = {'Item': itemName.text.strip(), 'Price': price, 'Time': strftime("%Y-%m-%d %H:%M:%S", localtime()), 'URL': url, 'UID':int(lastUID())+ 1 }
+    amazonItem = {'Item': itemName.text.strip(), 'Price': price, 'Time': strftime("%Y-%m-%d %H:%M:%S", localtime()), 'URL': url }
     #amazonItem = { itemName.text.strip() : [price, strftime("%Y-%m-%d %H:%M:%S", localtime())]}
     return amazonItem
 
 #Define function for fileNew(), which creates a new CSV and writes to it
 def fileNew(newItems):
     with open('AmazonItemsTest.csv', 'w', newline='') as itemsFile: #11/8/18 using 'AmazonItemsTest.csv' for testing purposes
-        fieldnames = ['Item', 'Price', 'Time', 'URL', 'UID']
+        fieldnames = ['Item', 'Price', 'Time', 'URL']
         theWriter = csv.DictWriter(itemsFile, fieldnames=fieldnames)
         
         theWriter.writeheader()
@@ -152,8 +152,8 @@ def fileNew(newItems):
 #Function for adding items to be tracked; similar to fileNew but items are appended to the end of the csv instead of
 #Overwriting the csv entirely
 def fileAdd(newItems):
-    with open('AmazonItemsTest.csv', 'a') as itemsFile: #11/8/18 using 'AmazonItemsTest.csv' for testing purposes
-        fieldnames = ['Item', 'Price', 'Time', 'URL', 'UID']
+    with open('AmazonItemsTest.csv', 'a', newLine='') as itemsFile: #11/8/18 using 'AmazonItemsTest.csv' for testing purposes
+        fieldnames = ['Item', 'Price', 'Time', 'URL']
         theWriter = csv.DictWriter(itemsFile, fieldnames=fieldnames)
         
         for item in newItems:
@@ -167,30 +167,30 @@ def displayCSV():
         for row in readCSV:
             print(row)
 
-#Define function that finds the last UID, so that the scrapping function can ennumerate from that last UID when scrapping new items
-def lastUID():
-    UIDS = []
-    with open('AmazonItemsTest.csv') as csvfile:
-        readCSV = csv.reader(csvfile, delimiter=',')
+# #Define function that finds the last UID, so that the scrapping function can ennumerate from that last UID when scrapping new items
+# def lastUID():
+#     UIDS = []
+#     with open('AmazonItemsTest.csv') as csvfile:
+#         readCSV = csv.reader(csvfile, delimiter=',')
         
-        for row in readCSV:
-            try:
-                if row[4] == 'UID':
-                    pass
-                else:
-                    UIDS.append(row[4])
-            except:
-                continue
+#         for row in readCSV:
+#             try:
+#                 if row[4] == 'UID':
+#                     pass
+#                 else:
+#                     UIDS.append(row[4])
+#             except:
+#                 continue
                 
                 
-            try:
-                nextUID = max(UIDS)
-            except:
-                print('exception')
-                nextUID = 0
+#             try:
+#                 nextUID = max(UIDS)
+#             except:
+#                 print('exception')
+#                 nextUID = 0
     
-#     print("nextUID: " + str(nextUID))
-    return nextUID
+# #     print("nextUID: " + str(nextUID))
+#     return nextUID
 
 
 
