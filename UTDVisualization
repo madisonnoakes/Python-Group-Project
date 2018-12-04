@@ -1,0 +1,43 @@
+import matplotlib.pyplot as plt
+
+unique_items = []
+price = {}
+time = {}
+
+#to fill unique items list
+with open("AmazonItemsTest.csv", "r") as csvFile:
+    readCSV = csv.reader(csvFile, delimiter=',')
+    for row in readCSV:
+        if row[0] not in unique_items:
+            unique_items.append(row[0])
+
+
+#to correct the the unique items list 
+unique_items.pop(0)
+#print(unique_items)
+
+
+#to fill the prices dictionary
+for item in unique_items:
+    prices = []
+    with open("AmazonItemsTest.csv", "r") as csvFile:
+        readCSV = csv.reader(csvFile, delimiter=',')
+        for row in readCSV:
+            if item == row[0]:
+                prices.append(row[1])
+                price[item] = prices
+                
+print(price)
+#    plotDict = dict(zip(unique_items,prices))
+
+#to fill the time dictionary
+for item in unique_items:
+    times = []
+    with open("AmazonItemsTest.csv", "r") as csvFile:
+        readCSV = csv.reader(csvFile, delimiter=',')
+        for row in readCSV:
+            if item == row[0]:
+                times.append(row[2])
+                time[item] = times
+
+print(time)
